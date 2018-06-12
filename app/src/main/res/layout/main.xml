@@ -1,25 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2015 The Chromium Authors. All rights reserved.
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright 2015 The Chromium Authors. All rights reserved.
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->
 
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <org.chromium.chrome.browser.coordinator.CoordinatorLayoutForPointer
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:scrollIndicators="none">
 
         <org.chromium.chrome.browser.compositor.CompositorViewHolder
             android:id="@+id/compositor_view_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-       <FrameLayout
+        <FrameLayout
             android:id="@+id/overview_list_layout_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
+
+        <org.chromium.chrome.browser.snackbar.BottomContainer
+            android:id="@+id/bottom_container3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginBottom="@dimen/bottom_control_container_height">
+
+            <GridView
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#f7f6f6"
+                android:columnWidth="90dp"
+                android:horizontalSpacing="10dp"
+                android:numColumns="auto_fit"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp"
+                android:visibility="gone" />
+        </org.chromium.chrome.browser.snackbar.BottomContainer>
+
+
+        <org.chromium.chrome.browser.snackbar.BottomContainer
+            android:id="@+id/bottom_container2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom">
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/navigationViewdeafult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/answers_answer_text"
+                android:visibility="gone"
+                app:menu="@menu/bottom_nav_menu" />
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/navigationViewexpand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/answers_answer_text"
+                android:visibility="gone"
+                app:menu="@menu/expand_nav_menu" />
+            <!--<GridView-->
+            <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:id="@+id/gridview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:columnWidth="90dp"-->
+            <!--android:numColumns="auto_fit"-->
+            <!--android:verticalSpacing="10dp"-->
+            <!--android:horizontalSpacing="10dp"-->
+            <!--android:stretchMode="columnWidth"-->
+            <!--android:visibility="gone"-->
+            <!--/>-->
+        </org.chromium.chrome.browser.snackbar.BottomContainer>
 
         <org.chromium.chrome.browser.snackbar.BottomContainer
             android:id="@+id/bottom_container"
@@ -29,8 +89,8 @@
 
             <HorizontalScrollView
                 android:id="@+id/keyboard_accessory"
-                android:layout_height="@dimen/keyboard_accessory_height"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/keyboard_accessory_height"
                 android:layout_gravity="start|bottom"
                 android:background="@drawable/keyboard_accessory_background"
                 android:contentDescription="@string/autofill_keyboard_accessory_content_description"
@@ -44,8 +104,8 @@
             android:id="@+id/bottombar_stub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-4dp"
             android:layout_gravity="start|bottom"
+            android:layout_marginTop="-4dp"
             android:inflatedId="@+id/bottombar"
             android:layout="@layout/custom_tabs_bottombar" />
 
@@ -107,10 +167,10 @@
 
         <ViewStub
             android:id="@+id/empty_container_stub"
-            android:inflatedId="@+id/empty_container"
-            android:layout="@layout/empty_background_view_tablet"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:inflatedId="@+id/empty_container"
+            android:layout="@layout/empty_background_view_tablet" />
     </org.chromium.chrome.browser.coordinator.CoordinatorLayoutForPointer>
 
     <!-- This empty view is used as the anchor for custom menu -->
@@ -118,6 +178,5 @@
         android:id="@+id/menu_anchor_stub"
         android:layout_width="0px"
         android:layout_height="0px"
-        android:layout_gravity="bottom|start"
-        />
+        android:layout_gravity="bottom|start" />
 </merge>

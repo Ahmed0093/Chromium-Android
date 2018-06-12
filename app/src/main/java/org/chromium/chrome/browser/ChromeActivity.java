@@ -23,6 +23,8 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Menu;
@@ -36,6 +38,8 @@ import android.view.WindowManager;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityManager.AccessibilityStateChangeListener;
 import android.view.accessibility.AccessibilityManager.TouchExplorationStateChangeListener;
+import android.widget.AdapterView;
+import android.widget.GridView;
 
 import org.chromium.base.ActivityState;
 import org.chromium.base.ApiCompatibilityUtils;
@@ -256,6 +260,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     private AppMenuPropertiesDelegate mAppMenuPropertiesDelegate;
     private AppMenuHandler mAppMenuHandler;
     private ToolbarManager mToolbarManager;
+    private BottomNavigationView deafultBottomNavigationView;
+    private BottomNavigationView expandBottomNavigationView;
+    private GridView gridview;
     private FindToolbarManager mFindToolbarManager;
     private BottomSheet mBottomSheet;
     private BottomSheetContentController mBottomSheetContentController;
@@ -377,8 +384,83 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         }
 
         ((BottomContainer) findViewById(R.id.bottom_container)).initialize(mFullscreenManager);
+        ((BottomContainer) findViewById(R.id.bottom_container2)).initialize(mFullscreenManager);
 
         mModalDialogManager = createModalDialogManager();
+      deafultBottomNavigationView= findViewById(R.id.navigationViewdeafult);
+        deafultBottomNavigationView.setVisibility(View.VISIBLE);
+        expandBottomNavigationView= findViewById(R.id.navigationViewexpand);
+         gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setVisibility(View.GONE);
+        gridview.setAdapter(new ImageAdapter(this));
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+              System.out.println("grid item = "+ position);
+            }
+        });
+        setNavigationViewListeners();
+
+    }
+
+    private void setNavigationViewListeners() {
+        deafultBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(false);
+                switch (item.getItemId()) {
+                    case R.id.origin_settings_icon:
+                        //Check the Item
+                        item.setChecked(true);
+                        itemClicked(item);
+                        break;
+                    case R.id.search_menu_id:
+                        //Check the Item
+                        item.setChecked(true);
+                        itemClicked(item);
+                        break;
+                    case R.id.expand_activities_button:
+                        //Check the Item
+                        item.setChecked(true);
+                        itemClicked(item);
+                        expandBottomNavigationView.setVisibility(View.VISIBLE);
+                        deafultBottomNavigationView.setVisibility(View.GONE);
+                        gridview.setVisibility(View.VISIBLE);
+
+                        break;
+                }
+                return true;
+            }
+        });
+
+        expandBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setChecked(false);
+                switch (item.getItemId()) {
+                    case R.id.origin_settings_icon:
+                        //Check the Item
+                        item.setChecked(true);
+                        itemClicked(item);
+                        break;
+                    case R.id.search_menu_id:
+                        //Check the Item
+                        item.setChecked(true);
+                        itemClicked(item);
+                        break;
+                    case R.id.close_menu_id:
+                        //Check the Item
+                        item.setChecked(true);
+                        expandBottomNavigationView.setVisibility(View.GONE);
+                        deafultBottomNavigationView.setVisibility(View.VISIBLE);
+                        gridview.setVisibility(View.GONE);
+                        itemClicked(item);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -459,6 +541,10 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // non-content displaying things such as the OSK.
         mInsetObserverView = InsetObserverView.create(this);
         rootView.addView(mInsetObserverView, 0);
+    }
+
+    private void itemClicked(MenuItem item) {
+        System.out.println("NavBari item cliked"+item.toString());
     }
 
     @Override
@@ -1054,7 +1140,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             mCompositorViewHolder.prepareForTabReparenting();
         }
         super.onStart();
-
+System.out.println("fel onStart");
         if (mPartnerBrowserRefreshNeeded) {
             mPartnerBrowserRefreshNeeded = false;
             PartnerBrowserCustomizations.initializeAsync(getApplicationContext(),
@@ -1086,6 +1172,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     @Override
     public void onStop() {
         super.onStop();
+        System.out.println("fel Stop");
 
         // We want to refresh partner browser provider every onStart().
         mPartnerBrowserRefreshNeeded = true;
@@ -1118,6 +1205,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     @SuppressLint("NewApi")
     @Override
     protected final void onDestroy() {
+        System.out.println("fel onDestroy");
+
         if (mReaderModeManager != null) {
             mReaderModeManager.destroy();
             mReaderModeManager = null;
@@ -1365,6 +1454,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     * chosen depending on device configuration and the visible menu button to the user.
     */
     protected void showAppMenuForKeyboardEvent() {
+        System.out.println("Show Keyboard Event");
+
         if (getAppMenuHandler() == null) return;
 
         TextBubble.dismissBubbles();
@@ -1683,6 +1774,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     public void onOrientationChange(int orientation) {
         if (mToolbarManager != null) mToolbarManager.onOrientationChange();
         Tab tab = getActivityTab();
+        System.out.println("fel orientation Change =  " + orientation);
+
         if (tab != null) tab.onOrientationChange();
     }
 

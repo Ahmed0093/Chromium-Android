@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:chrome="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/origin_settings_icon"
+        android:icon="@drawable/settings_cog"
+        android:title="@string/show_info"
+        chrome:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/search_menu_id"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search"
+        chrome:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/close_menu_id"
+        android:icon="@drawable/btn_close"
+        android:title="@string/close"
+        chrome:showAsAction="ifRoom" />
+</menu>

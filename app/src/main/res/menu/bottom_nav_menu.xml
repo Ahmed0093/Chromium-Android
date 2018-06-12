@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:chrome="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/origin_settings_icon"
+        android:icon="@drawable/settings_cog"
+        android:title="@string/show_info"
+        chrome:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/ui_settings_button"
+        android:icon="@drawable/settings_storage"
+        android:title="@string/search"
+        chrome:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/expand_activities_button"
+        android:icon="@drawable/ic_add"
+        android:title="@string/expand"
+        chrome:showAsAction="ifRoom" />
+
+
+</menu>
